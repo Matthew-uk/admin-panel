@@ -2,22 +2,28 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleAdminLogin = async (e) => {
     setLoading(true);
     e.preventDefault();
     console.log({ email, password });
     try {
-      const res = await axios.post("http://localhost:8000/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "https://admin-panel-backend-sfid.onrender.com/auth/login",
+        {
+          email,
+          password,
+        }
+      );
       console.log(res.data);
+      router.push("https://ecommerce-admin-dashboard-v1.vercel.app/withdraw");
     } catch (error) {
       console.log(error.message);
     } finally {
